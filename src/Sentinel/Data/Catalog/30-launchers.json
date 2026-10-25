@@ -1,0 +1,22 @@
+[
+  {"n": "Kingdom Hearts Melody of Memory", "l": ["Epic"], "e": "Proprietary", "g": "Rhythm", "gpu": 2, "cpu": 2, "y": 2020, "f": [], "q": 1},
+  {"n": "StarCraft: Remastered", "l": ["Battle.net"], "e": "Proprietary (Blizzard)", "g": "RTS", "gpu": 1, "cpu": 2, "y": 2017, "f": [], "q": 1},
+  {"n": "Warcraft II: Battle.net Edition", "l": ["Battle.net"], "e": "Proprietary (Blizzard)", "g": "RTS", "gpu": 1, "cpu": 1, "y": 1999, "f": [], "q": 1},
+  {"n": "2XKO", "l": ["Riot"], "e": "Unreal Engine", "g": "Fighting", "gpu": 4, "cpu": 3, "c": true, "y": 2025, "f": [], "q": 1},
+  {"n": "XDefiant", "l": ["Ubisoft Connect"], "e": "Snowdrop", "g": "Arena FPS", "gpu": 4, "cpu": 4, "c": true, "y": 2024, "f": [], "q": 1},
+  {"n": "RuneScape 3", "l": ["Jagex", "Standalone"], "e": "Proprietary (Jagex)", "g": "MMORPG", "gpu": 2, "cpu": 3, "y": 2013, "f": [], "q": 1},
+  {"n": "Tibia", "l": ["Standalone"], "e": "Custom", "g": "MMORPG", "gpu": 1, "cpu": 1, "y": 1997, "f": [], "q": 1},
+  {"n": "Ultima Online", "l": ["Standalone"], "e": "Custom", "g": "MMORPG", "gpu": 1, "cpu": 2, "y": 1997, "f": [], "q": 1},
+  {"n": "Entropia Universe", "l": ["Standalone"], "e": "Custom", "g": "MMORPG", "gpu": 2, "cpu": 3, "y": 2003, "f": [], "q": 1},
+  {"n": "Honkai Impact 3rd", "l": ["HoYoPlay"], "e": "Unity", "g": "Action RPG", "gpu": 4, "cpu": 3, "y": 2016, "f": [], "t": "Cap at 60 FPS; lower Shadow and Post-Processing on mid-range GPUs.", "q": 1},
+  {"n": "Dungeon & Fighter", "l": ["Nexon"], "e": "Custom", "g": "Action Brawler MMO", "gpu": 2, "cpu": 3, "y": 2005, "f": [], "q": 1},
+  {"n": "Live for Speed", "l": ["Standalone"], "e": "Custom", "g": "Racing Sim", "gpu": 1, "cpu": 2, "y": 2005, "f": [], "q": 1},
+  {"n": "FlightGear", "l": ["Standalone"], "e": "OpenSceneGraph", "g": "Flight Sim", "gpu": 4, "cpu": 4, "y": 1997, "f": [], "t": "Lower scenery and tree density; photoreal scenery is GPU-heavy.", "q": 1},
+  {"n": "0 A.D.", "l": ["Standalone"], "e": "Pyrogenesis", "g": "RTS", "gpu": 3, "cpu": 4, "y": 2009, "f": [], "t": "Lower shadows; large late-game armies are CPU-heavy.", "q": 1},
+  {"n": "Xonotic", "l": ["Standalone"], "e": "DarkPlaces", "g": "FPS", "gpu": 1, "cpu": 2, "y": 2010, "f": [], "q": 1},
+  {"n": "Final Fantasy XI", "l": ["Standalone"], "e": "Custom", "g": "MMORPG", "gpu": 2, "cpu": 3, "y": 2002, "f": [], "q": 1},
+  {"n": "Sonic Robo Blast 2", "l": ["Standalone"], "e": "Custom", "g": "Platformer", "gpu": 1, "cpu": 2, "y": 1998, "f": [], "q": 1},
+  {"n": "Freeciv", "l": ["Standalone"], "e": "Custom", "g": "Turn-Based Strategy", "gpu": 1, "cpu": 1, "y": 1996, "f": [], "q": 1},
+  {"n": "Crackdown 3", "l": ["Xbox"], "e": "Proprietary", "g": "Action Open World", "gpu": 6, "cpu": 5, "y": 2019, "f": [], "t": "Shadow quality and draw distance are the main costs; lower them first if frame rate drops.", "q": 1},
+  {"n": "Microsoft Solitaire Collection", "l": ["Xbox"], "e": "Native", "g": "Card", "gpu": 1, "cpu": 1, "y": 2012, "f": [], "q": 1}
+]

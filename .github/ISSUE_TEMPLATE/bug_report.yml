@@ -1,0 +1,49 @@
+name: Bug report
+description: Something in Sentinel doesn't work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please don't include anything personal. A hardware report (`--report`) lists your hardware and installed games, so only attach it if you're happy to share that.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open My Games
+        2. Select …
+        3. Click Apply to game
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Sentinel version
+      description: Shown at the bottom of the sidebar.
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+  - type: input
+    id: hardware
+    attributes:
+      label: GPU and CPU (optional)
+      placeholder: RTX 4070, Ryzen 7 7800X3D
+  - type: textarea
+    id: log
+    attributes:
+      label: Log (optional)
+      description: Relevant lines from %LOCALAPPDATA%\Sentinel\sentinel.log
+      render: text

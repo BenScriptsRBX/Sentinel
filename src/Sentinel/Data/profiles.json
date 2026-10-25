@@ -1,0 +1,109 @@
+[
+  {
+    "id": "cs2",
+    "type": "kv",
+    "files": ["{steamuserdata}\\730\\local\\cfg\\cs2_video.txt", "{steamuserdata}\\730\\remote\\cfg\\cs2_video.txt"],
+    "note": "Writes cs2_video.txt. Only keys already in the file are changed — open CS2 video settings once if nothing is found.",
+    "map": {
+      "Shadows": [{ "k": "setting.videocfg_shadow_quality", "v": ["0", "1", "2", "3"] }],
+      "Textures": [{ "k": "setting.videocfg_texture_detail", "v": ["0", "1", "2", "2"] }, { "k": "setting.r_texturefilteringquality", "v": ["1", "3", "4", "5"] }],
+      "Effects": [{ "k": "setting.videocfg_particle_detail", "v": ["0", "1", "2", "2"] }],
+      "Lighting": [{ "k": "setting.shaderquality", "v": ["0", "0", "1", "1"] }],
+      "AmbientOcclusion": [{ "k": "setting.videocfg_ao_detail", "v": ["0", "1", "2", "2"] }],
+      "AntiAliasing": [{ "k": "setting.msaa_samples", "v": ["2", "4", "4", "8"] }]
+    },
+    "vsync": { "k": "setting.mat_vsync", "v": "0" }
+  },
+  {
+    "id": "apex",
+    "type": "kv",
+    "files": ["{savedgames}\\Respawn\\Apex\\local\\videoconfig.txt"],
+    "note": "Writes videoconfig.txt in Saved Games. FPS cap is a launch option (+fps_max N) — set it in Steam/EA properties.",
+    "map": {
+      "Shadows": [{ "k": "setting.csm_enabled", "v": ["0", "1", "1", "1"] }, { "k": "setting.shadow_enable", "v": ["0", "1", "1", "1"] }, { "k": "setting.csm_cascade_res", "v": ["512", "1024", "2048", "2048"] }],
+      "AmbientOcclusion": [{ "k": "setting.ssao_enabled", "v": ["0", "1", "1", "1"] }],
+      "Volumetrics": [{ "k": "setting.volumetric_lighting", "v": ["0", "0", "1", "1"] }],
+      "Effects": [{ "k": "setting.particle_cpu_level", "v": ["0", "1", "2", "3"] }],
+      "ViewDistance": [{ "k": "setting.r_lod_switch_scale", "v": ["0.5", "0.8", "1", "1"] }],
+      "AntiAliasing": [{ "k": "setting.mat_antialias_mode", "v": ["0", "12", "12", "12"] }],
+      "PostProcessing": [{ "k": "setting.mat_depthfeather_enable", "v": ["0", "1", "1", "1"] }]
+    },
+    "vsync": { "k": "setting.mat_vsync_mode", "v": "0" }
+  },
+  {
+    "id": "gtav",
+    "type": "xmlattr",
+    "files": ["{documents}\\Rockstar Games\\GTA V\\settings.xml"],
+    "note": "Writes Documents\\Rockstar Games\\GTA V\\settings.xml (Legacy edition).",
+    "map": {
+      "Textures": [{ "k": "TextureQuality", "v": ["0", "1", "2", "2"] }],
+      "Lighting": [{ "k": "ShaderQuality", "v": ["0", "1", "2", "2"] }],
+      "Shadows": [{ "k": "ShadowQuality", "v": ["1", "1", "2", "3"] }],
+      "Reflections": [{ "k": "ReflectionQuality", "v": ["0", "1", "2", "3"] }, { "k": "WaterQuality", "v": ["0", "1", "2", "2"] }],
+      "Effects": [{ "k": "ParticleQuality", "v": ["0", "1", "2", "2"] }],
+      "Foliage": [{ "k": "GrassQuality", "v": ["0", "1", "2", "3"] }],
+      "PostProcessing": [{ "k": "PostFX", "v": ["0", "1", "2", "3"] }],
+      "AmbientOcclusion": [{ "k": "SSAO", "v": ["0", "1", "2", "2"] }],
+      "AntiAliasing": [{ "k": "MSAA", "v": ["0", "0", "2", "4"] }],
+      "ViewDistance": [{ "k": "LodScale", "v": ["0.500000", "0.750000", "1.000000", "1.000000"] }]
+    },
+    "vsync": { "k": "VSync", "v": "0" }
+  },
+  {
+    "id": "rdr2",
+    "type": "xmlattr",
+    "files": ["{documents}\\Rockstar Games\\Red Dead Redemption 2\\Settings\\system.xml"],
+    "note": "Writes system.xml. Only settings already present in the file are changed.",
+    "map": {
+      "Textures": [{ "k": "textureQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "Shadows": [{ "k": "shadowQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }, { "k": "farShadowQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "Reflections": [{ "k": "reflectionQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }, { "k": "mirrorQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }, { "k": "waterQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "Volumetrics": [{ "k": "volumetricsQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "Effects": [{ "k": "particleQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "Lighting": [{ "k": "lightingQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }, { "k": "globalIlluminationQuality", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "AmbientOcclusion": [{ "k": "ssao", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }],
+      "ViewDistance": [{ "k": "tessellation", "v": ["kSettingLevel_Low", "kSettingLevel_Medium", "kSettingLevel_High", "kSettingLevel_Ultra"] }]
+    }
+  },
+  {
+    "id": "minecraft",
+    "type": "colon",
+    "files": ["{appdata}\\.minecraft\\options.txt"],
+    "note": "Writes .minecraft\\options.txt. Modded launchers (Prism, CurseForge) keep per-instance options.txt — apply there manually.",
+    "map": {
+      "ViewDistance": [{ "k": "renderDistance", "v": ["6", "10", "16", "24"] }, { "k": "simulationDistance", "v": ["5", "8", "10", "12"] }],
+      "Lighting": [{ "k": "graphicsMode", "v": ["0", "1", "1", "2"] }, { "k": "ao", "v": ["false", "true", "true", "true"] }],
+      "Effects": [{ "k": "particles", "v": ["2", "1", "0", "0"] }],
+      "Shadows": [{ "k": "entityShadows", "v": ["false", "true", "true", "true"] }],
+      "Foliage": [{ "k": "biomeBlendRadius", "v": ["0", "1", "2", "3"] }],
+      "Textures": [{ "k": "mipmapLevels", "v": ["2", "4", "4", "4"] }]
+    },
+    "vsync": { "k": "enableVsync", "v": "false" },
+    "fps": { "k": "maxFps", "max": 260 }
+  },
+  {
+    "id": "roblox",
+    "type": "xmlnamed",
+    "files": ["{localappdata}\\Roblox\\GlobalSettings_13.xml"],
+    "preset": true,
+    "note": "Sets the manual graphics quality slider (1-10) in GlobalSettings_13.xml. Close Roblox first — it rewrites the file on exit.",
+    "overall": [{ "k": "GraphicsQualityLevel", "v": ["2", "4", "7", "10"] }, { "k": "SavedQualityLevel", "v": ["2", "4", "7", "10"] }],
+    "fps": { "k": "FramerateCap", "max": 240 }
+  },
+  {
+    "id": "league",
+    "type": "ini",
+    "files": ["{install}\\Config\\game.cfg", "{install}\\Game\\Config\\game.cfg"],
+    "note": "Writes League of Legends\\Config\\game.cfg ([Performance]).",
+    "map": {
+      "Shadows": [{ "k": "Performance/ShadowQuality", "v": ["0", "1", "3", "4"] }],
+      "ViewDistance": [{ "k": "Performance/CharacterQuality", "v": ["1", "2", "3", "4"] }],
+      "Lighting": [{ "k": "Performance/EnvironmentQuality", "v": ["1", "2", "3", "4"] }],
+      "Effects": [{ "k": "Performance/EffectsQuality", "v": ["1", "2", "3", "4"] }],
+      "AntiAliasing": [{ "k": "Performance/EnableFXAA", "v": ["0", "0", "1", "1"] }],
+      "PostProcessing": [{ "k": "Performance/CharacterInking", "v": ["0", "0", "1", "1"] }],
+      "Foliage": [{ "k": "Performance/EnableGrassSwaying", "v": ["0", "0", "1", "1"] }]
+    },
+    "vsync": { "k": "Performance/WaitForVerticalSync", "v": "0" }
+  }
+]

@@ -1,0 +1,50 @@
+name: Release
+
+# Push a tag like v1.2.0 (after adding a matching CHANGELOG section) and this builds, tests and publishes the release.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to (re)build, e.g. v1.0.0
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Test
+        run: dotnet test Sentinel.slnx -c Release
+
+      - name: Package
+        shell: pwsh
+        run: ./build/publish.ps1 -Version $env:TAG.TrimStart('v')
+
+      - name: Publish release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $files = @(Get-ChildItem artifacts/*.zip | ForEach-Object FullName) + "artifacts/SHA256SUMS.txt"
+          gh release view $env:TAG *> $null
+          if ($LASTEXITCODE -eq 0) {
+            # Release already exists (e.g. created by hand): refresh its binaries with this reproducible build.
+            gh release upload $env:TAG @files --clobber
+          } else {
+            gh release create $env:TAG @files --title "Sentinel $env:TAG" --notes-file artifacts/RELEASE_NOTES.md
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

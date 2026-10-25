@@ -1,0 +1,25 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+TestResults/
+*.trx
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.rsuser
+*.DotSettings.user
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local scan output (contains your hardware and game list)
+report*.json
+snapshots/

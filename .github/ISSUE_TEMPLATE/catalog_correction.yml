@@ -1,0 +1,34 @@
+name: Catalog correction
+description: A game is missing, or its data (engine, demand, features, fps lock) is wrong.
+labels: [catalog]
+body:
+  - type: input
+    id: game
+    attributes:
+      label: Game
+      description: Exact store name, plus a Steam/GOG link or app ID if you have one.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong?
+      multiple: true
+      options:
+        - Missing game
+        - Wrong engine
+        - GPU or CPU demand is off
+        - Wrong modern features (DLSS / FSR / RT / frame gen…)
+        - Missing or wrong fps lock
+        - Not a game (tool, DLC, soundtrack)
+        - Wrong name or Steam app ID
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: Correct value and source
+      description: For example "Supports DLSS 3 frame generation (patch 1.2 notes)" or a benchmark showing ~90 fps at 1080p High on an RTX 3070.
+    validations:
+      required: true

@@ -1,0 +1,236 @@
+<UserControl x:Class="Sentinel.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="clr-namespace:Sentinel.Views">
+    <UserControl.Resources>
+        <v:ScoreToArc x:Key="Arc" />
+        <v:TweakStatusToBrush x:Key="StatusBrush" />
+        <v:TweakStatusToBrush x:Key="StatusSoft" Soft="True" />
+        <v:CategoryToGlyph x:Key="CategoryGlyph" />
+
+        <!-- Stat tile in the hero. Tag = glyph. -->
+        <Style x:Key="StatTile" TargetType="Button" BasedOn="{StaticResource GhostButton}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="16,14" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="#1AFFFFFF" />
+            <Setter Property="BorderBrush" Value="#1FFFFFFF" />
+        </Style>
+
+        <!-- Decorative rings behind the score gauge, clipped by the hero's rounded corners. -->
+        <DrawingBrush x:Key="HeroRings" Stretch="None" AlignmentX="Left" AlignmentY="Top"
+                      Viewbox="0,0,2400,260" ViewboxUnits="Absolute" Viewport="0,0,2400,260" ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Transparent" Geometry="M 0,0 H 2400 V 260 H 0 Z" />
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#14FFFFFF" Thickness="1" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <EllipseGeometry Center="99,119" RadiusX="96" RadiusY="96" />
+                                <EllipseGeometry Center="99,119" RadiusX="150" RadiusY="150" />
+                                <EllipseGeometry Center="99,119" RadiusX="210" RadiusY="210" />
+                                <EllipseGeometry Center="99,119" RadiusX="280" RadiusY="280" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="2" DashCap="Round" StartLineCap="Round" EndLineCap="Round">
+                                <Pen.Brush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#007C5CFF" Offset="0" />
+                                        <GradientStop Color="#997C5CFF" Offset="0.5" />
+                                        <GradientStop Color="#0022D3EE" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Pen.Brush>
+                            </Pen>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <!-- a "scan" arc sweeping across the second ring -->
+                            <PathGeometry Figures="M 249,119 A 150,150 0 0 0 99,-31" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+        <DrawingBrush x:Key="HeroWatermark" Stretch="None" AlignmentX="Right" AlignmentY="Center">
+            <DrawingBrush.Drawing>
+                <DrawingGroup Opacity="0.07">
+                    <DrawingGroup.Transform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="5" ScaleY="5" />
+                            <RotateTransform Angle="-12" CenterX="160" CenterY="160" />
+                        </TransformGroup>
+                    </DrawingGroup.Transform>
+                    <StaticResource ResourceKey="LogoDrawing" />
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,6,28,28">
+            <v:PageHeader Glyph="&#xE80F;" Title="Dashboard" Subtitle="Your hardware, detected games and what to improve — at a glance." />
+
+            <!-- ============================== hero -->
+            <Grid MinHeight="236">
+                <Border CornerRadius="20" Background="{StaticResource HeroGradient}" />
+                <Border CornerRadius="20" Background="{StaticResource HeroRings}" />
+                <Border CornerRadius="20" Background="{StaticResource HeroWatermark}" />
+                <Border CornerRadius="20" BorderThickness="1">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#667C5CFF" Offset="0" />
+                            <GradientStop Color="#1FFFFFFF" Offset="0.5" />
+                            <GradientStop Color="#4D22D3EE" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                </Border>
+
+                <Grid Margin="28,26,24,26">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="142" Height="142" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Ellipse Fill="{StaticResource GlowViolet}" Margin="-30" />
+                        <Path Data="{Binding Source=100, Converter={StaticResource Arc}}" Stroke="#24FFFFFF" StrokeThickness="12" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                        <Path Data="{Binding OverallScore, Converter={StaticResource Arc}}" Stroke="{StaticResource AccentGradient}" StrokeThickness="12" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                              Effect="{StaticResource AccentGlow}" />
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding OverallScore}" Style="{StaticResource BigNumber}" HorizontalAlignment="Center" />
+                            <TextBlock Text="GAMING SCORE" Style="{StaticResource Caption}" FontSize="10" HorizontalAlignment="Center" Margin="0,-4,0,0" />
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="14,0,24,0">
+                        <Border Style="{StaticResource Chip}" HorizontalAlignment="Left" Background="#337C5CFF" BorderBrush="#667C5CFF" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE735;" Style="{StaticResource Icon}" FontSize="10" Foreground="#C9BDFF" Margin="0,0,6,0" />
+                                <TextBlock Text="{Binding Tier}" Style="{StaticResource ChipText}" />
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="{Binding GpuLine}" Style="{StaticResource H2}" FontSize="24" Margin="0,12,0,2" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="{Binding CpuLine}" Foreground="{StaticResource Muted}" FontSize="14" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="{Binding TierBlurb}" Style="{StaticResource MutedText}" Margin="0,14,0,0" MaxWidth="520" HorizontalAlignment="Left" />
+                    </StackPanel>
+
+                    <UniformGrid Grid.Column="2" Columns="2" VerticalAlignment="Center">
+                        <Button Style="{StaticResource StatTile}" Command="{Binding NavigateCommand}" CommandParameter="Library">
+                            <DockPanel MinWidth="108">
+                                <TextBlock DockPanel.Dock="Right" Text="&#xE7FC;" Style="{StaticResource Icon}" FontSize="15" Foreground="#99FFFFFF" VerticalAlignment="Top" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding GameCount}" FontSize="26" FontWeight="Bold" FontFamily="{StaticResource DisplayFont}" />
+                                    <TextBlock Text="games found" Foreground="{StaticResource Muted}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Button>
+                        <Button Style="{StaticResource StatTile}" Command="{Binding NavigateCommand}" CommandParameter="Library">
+                            <DockPanel MinWidth="108">
+                                <TextBlock DockPanel.Dock="Right" Text="&#xE945;" Style="{StaticResource Icon}" FontSize="15" Foreground="{StaticResource Accent2}" VerticalAlignment="Top" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding AutoTuneCount}" FontSize="26" FontWeight="Bold" FontFamily="{StaticResource DisplayFont}" Foreground="{StaticResource Accent2}" />
+                                    <TextBlock Text="auto-tunable" Foreground="{StaticResource Muted}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Button>
+                        <Button Style="{StaticResource StatTile}" Command="{Binding NavigateCommand}" CommandParameter="Tweaks">
+                            <DockPanel MinWidth="108">
+                                <TextBlock DockPanel.Dock="Right" Text="&#xE90F;" Style="{StaticResource Icon}" FontSize="15" Foreground="{StaticResource Warn}" VerticalAlignment="Top" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding HealthPercent, StringFormat={}{0}%}" FontSize="26" FontWeight="Bold" FontFamily="{StaticResource DisplayFont}" Foreground="{StaticResource Warn}" />
+                                    <TextBlock Text="PC health" Foreground="{StaticResource Muted}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Button>
+                        <Button Style="{StaticResource StatTile}" Command="{Binding NavigateCommand}" CommandParameter="Catalog">
+                            <DockPanel MinWidth="108">
+                                <TextBlock DockPanel.Dock="Right" Text="&#xE8F1;" Style="{StaticResource Icon}" FontSize="15" Foreground="#C9BDFF" VerticalAlignment="Top" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding CatalogCountShort}" FontSize="26" FontWeight="Bold" FontFamily="{StaticResource DisplayFont}" />
+                                    <TextBlock Text="games in catalog" Foreground="{StaticResource Muted}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Button>
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+
+            <!-- ============================== hardware -->
+            <Label Style="{StaticResource Section}" Content="Hardware" Margin="0,30,0,14" />
+            <ItemsControl ItemsSource="{Binding Specs}" Margin="0,0,-12,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardHoverable}" Margin="0,0,12,12" Padding="18">
+                            <DockPanel>
+                                <DockPanel DockPanel.Dock="Top">
+                                    <Grid DockPanel.Dock="Left" Width="38" Height="38">
+                                        <Border CornerRadius="11" Background="{Binding SoftBrush}" />
+                                        <TextBlock Text="{Binding Icon}" Style="{StaticResource Icon}" Foreground="{Binding AccentBrush}" HorizontalAlignment="Center" />
+                                    </Grid>
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding ScoreLabel}" FontSize="11.5" FontWeight="SemiBold" Foreground="{Binding AccentBrush}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource Caption}" FontSize="12" VerticalAlignment="Center" Margin="12,0,0,0" />
+                                </DockPanel>
+                                <Grid DockPanel.Dock="Bottom" Height="5" Margin="0,14,0,0">
+                                    <Border CornerRadius="3" Background="{StaticResource Line}" />
+                                    <ProgressBar Style="{StaticResource Meter}" Height="5" Value="{Binding Score, Mode=OneWay}" Foreground="{Binding AccentBrush}" />
+                                </Grid>
+                                <StackPanel Margin="0,14,0,0">
+                                    <TextBlock Text="{Binding Value}" Style="{StaticResource H3}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Value}" />
+                                    <TextBlock Text="{Binding Detail}" Style="{StaticResource MutedText}" FontSize="12" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- ============================== recommendations -->
+            <DockPanel Margin="0,18,0,14">
+                <Button DockPanel.Dock="Right" Style="{StaticResource GhostButton}" Command="{Binding NavigateCommand}" CommandParameter="Tweaks">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="See all tweaks" Foreground="{StaticResource Muted}" />
+                        <TextBlock Text="&#xE76C;" Style="{StaticResource Icon}" FontSize="10" Foreground="{StaticResource Muted}" Margin="8,1,0,0" />
+                    </StackPanel>
+                </Button>
+                <Label Style="{StaticResource Section}" Content="Top recommendations" VerticalAlignment="Center" />
+            </DockPanel>
+            <ItemsControl ItemsSource="{Binding TopTweaks}" Margin="0,0,-12,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardHoverable}" Margin="0,0,12,12" Padding="16">
+                            <DockPanel>
+                                <Grid DockPanel.Dock="Left" Width="40" Height="40" Margin="0,0,14,0" VerticalAlignment="Top">
+                                    <Border CornerRadius="11" Background="{Binding Status, Converter={StaticResource StatusSoft}}" />
+                                    <TextBlock Text="{Binding Category, Converter={StaticResource CategoryGlyph}}" Style="{StaticResource Icon}" FontSize="15"
+                                               Foreground="{Binding Status, Converter={StaticResource StatusBrush}}" HorizontalAlignment="Center" />
+                                </Grid>
+                                <Border DockPanel.Dock="Right" Style="{StaticResource Chip}" Background="{Binding Status, Converter={StaticResource StatusSoft}}" Margin="12,0,0,0" VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding StatusLabel}" FontSize="11" FontWeight="SemiBold" Foreground="{Binding Status, Converter={StaticResource StatusBrush}}" />
+                                </Border>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource H3}" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" FontSize="12" Margin="0,4,0,0" MaxHeight="34" TextTrimming="WordEllipsis" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

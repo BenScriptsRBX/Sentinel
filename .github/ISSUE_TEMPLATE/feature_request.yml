@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest an idea, a new game config adapter or a tweak.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like Sentinel to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help?
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: For a new auto-apply adapter, include where the game stores its settings and the relevant keys.
