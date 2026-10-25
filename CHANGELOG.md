@@ -2,6 +2,19 @@
 
 All notable changes to Sentinel are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Demo mode:** `Sentinel.exe --demo` shows a made-up PC and game library, so the app can be shown or screenshotted without revealing your hardware or games. Saved settings aren't loaded or written, and no button changes Windows or a game's files.
+- **README screenshots** of the main pages, taken in demo mode.
+
+### Fixed
+
+- **Upscaling estimates were too optimistic.** DLSS / FSR / XeSS gains now follow GPU-bound benchmarks: about 1.4× at Quality, 1.75× at Performance and 2× at Ultra Performance. Version 1.0.0 assumed up to 4×, which inflated plans that use upscaling and the "max achievable" figure in demanding games. Ray-traced work is per-pixel, so it still gains more from upscaling.
+- Long game names are no longer cut off in the game page header.
+- `--snapshot` ignores the mouse, so hover highlights don't end up in captures, and gives game art time to load.
+
 ## [1.0.0] - 2026-10-25
 
 First public release.
@@ -19,4 +32,5 @@ First public release.
 - **Game artwork** from Steam and GOG, loaded on demand and cached.
 - **Dark UI** with the Sentinel logo, Windows 11 rounded corners, a game-art hero and an FPS range bar.
 
+[Unreleased]: https://github.com/BenScriptsRBX/Sentinel/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/BenScriptsRBX/Sentinel/releases/tag/v1.0.0

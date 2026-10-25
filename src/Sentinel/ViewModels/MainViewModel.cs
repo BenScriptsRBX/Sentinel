@@ -182,11 +182,11 @@ public sealed class MainViewModel : ObservableObject
         try
         {
             StatusText = "Detecting hardware…";
-            Hardware = await HardwareDetector.DetectAsync();
+            Hardware = AppMode.Demo ? DemoData.Hardware() : await HardwareDetector.DetectAsync();
             BuildSpecs();
 
             StatusText = "Scanning launchers for games…";
-            var installed = await GameScanner.ScanAsync();
+            var installed = AppMode.Demo ? DemoData.Games() : await GameScanner.ScanAsync();
 
             StatusText = "Building recommendations…";
             var hw = Hardware;
@@ -211,7 +211,7 @@ public sealed class MainViewModel : ObservableObject
 
             SelectedGame ??= Games.FirstOrDefault(g => g.CanAutoApply) ?? Games.FirstOrDefault();
             SelectedCatalogGame ??= CatalogGames.FirstOrDefault();
-            StatusText = $"{Games.Count} games · {CatalogCount} in catalog";
+            StatusText = $"{(AppMode.Demo ? "Demo PC · " : "")}{Games.Count} games · {CatalogCountLabel} in catalog";
         }
         catch (Exception ex)
         {
@@ -261,7 +261,8 @@ public sealed class MainViewModel : ObservableObject
         if (action is null) return;
         try
         {
-            t.Result = await action();
+            // Demo mode plays out the result without changing anything on this PC.
+            t.Result = AppMode.Demo ? "Demo mode: nothing on this PC was changed." : await action();
             if (t.ActionLabel == "Apply")
             {
                 t.Status = revert ? TweakStatus.Recommended : TweakStatus.Optimal;

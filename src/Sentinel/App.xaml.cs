@@ -22,9 +22,13 @@ public partial class App : Application
             return;
         }
 
+        AppMode.Demo = args.Contains("--demo", StringComparer.OrdinalIgnoreCase);
+
+        // --snapshot takes an output folder and an optional catalog search; another --switch after it isn't one of them.
         int snapshot = Array.IndexOf(args, "--snapshot");
-        var window = new MainWindow(snapshot >= 0 ? args.ElementAtOrDefault(snapshot + 1) ?? "snapshots" : null,
-                                    snapshot >= 0 ? args.ElementAtOrDefault(snapshot + 2) : null);
+        string? Value(int i) => args.ElementAtOrDefault(i) is { } v && !v.StartsWith("--") ? v : null;
+        var window = new MainWindow(snapshot >= 0 ? Value(snapshot + 1) ?? "snapshots" : null,
+                                    snapshot >= 0 ? Value(snapshot + 2) : null);
         MainWindow = window;
         window.Show();
     }

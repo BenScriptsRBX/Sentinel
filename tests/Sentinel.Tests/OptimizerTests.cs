@@ -26,6 +26,29 @@ public class OptimizerTests
         }
     }
 
+    [Theory]
+    [InlineData(67, 1.3, 1.55)]  // Quality
+    [InlineData(58, 1.45, 1.7)]  // Balanced
+    [InlineData(50, 1.6, 1.9)]   // Performance
+    [InlineData(33, 1.85, 2.3)]  // Ultra Performance
+    public void Upscaling_gains_stay_within_gpu_bound_benchmark_ranges(int renderScale, double min, double max)
+    {
+        foreach (var res in new Resolution[] { new(1920, 1080), R1440, new(3840, 2160) })
+        {
+            double gain = PerformanceModel.ResolutionCost(res, 100) / PerformanceModel.ResolutionCost(res, renderScale);
+            Assert.InRange(gain, min, max);
+        }
+    }
+
+    [Fact]
+    public void Upscaling_saves_more_with_path_tracing_than_with_raster()
+    {
+        double raster = PerformanceModel.FrameCost(R1440, 100) / PerformanceModel.FrameCost(R1440, 50);
+        double pathTraced = PerformanceModel.FrameCost(R1440, 100, 0.32) / PerformanceModel.FrameCost(R1440, 50, 0.32);
+        Assert.InRange(pathTraced, 2.1, 2.7); // Cyberpunk 2077 Overdrive at 1440p: DLSS Performance ≈ 2.4× native
+        Assert.True(pathTraced > raster);
+    }
+
     [Fact]
     public void Reachable_targets_are_met()
     {

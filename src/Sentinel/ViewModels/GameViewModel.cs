@@ -133,9 +133,10 @@ public sealed class GameViewModel : ObservableObject
         ? "Sentinel can't write this game's settings automatically — follow the recommended settings below in the in-game menu."
         : _adapter.Description;
     public string AdapterName => Installed is null ? "Estimates only" : _adapter?.Name ?? "In-game guide";
-    public string? ConfigPath => _adapter?.Target;
+    public string? ConfigPath => AppMode.Demo ? DemoData.ConfigPath(Installed) : _adapter?.Target;
     public bool HasConfig => ConfigPath is not null;
-    public bool HasBackup => BackupService.HasBackup(Id);
+    // In demo mode a real backup of the same game must never be restored over the real config.
+    public bool HasBackup => !AppMode.Demo && BackupService.HasBackup(Id);
     public string Id => Catalog.Id;
 
     // ---- inputs
@@ -381,6 +382,11 @@ public sealed class GameViewModel : ObservableObject
     private void Apply()
     {
         if (_adapter is null || Plan is null || Installed is null) return;
+        if (AppMode.Demo)
+        {
+            SetStatus("Demo mode: nothing was written. On your own PC, Sentinel backs up this file and then writes the plan into it.", error: false);
+            return;
+        }
         if (ConfigResolver.IsRunning(Installed))
         {
             SetStatus("Close the game first — it rewrites its settings file when it exits.", error: true);

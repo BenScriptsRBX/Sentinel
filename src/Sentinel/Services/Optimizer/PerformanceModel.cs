@@ -64,14 +64,36 @@ public static class PerformanceModel
         return cost;
     }
 
-    /// <summary>GPU cost scaling with rendered pixels (sub-linear: geometry and CPU-side work don't scale).</summary>
+    /// <summary>Share of a native frame's GPU time that upscaling doesn't shrink: shadow maps, geometry, output-resolution post-processing.</summary>
+    private const double UpscaleFixedShare = 0.38;
+    /// <summary>Ray tracing is mostly per-pixel work (rays, denoising); only BVH upkeep stays the same at a lower render scale.</summary>
+    private const double RtFixedShare = 0.15;
+
+    /// <summary>
+    /// Raster GPU cost of rendering at a resolution, relative to native 1080p. Native cost scales sub-linearly with pixels
+    /// (geometry and CPU-side work don't scale). Upscaling only saves the pixel-bound part of a frame, which keeps its gains
+    /// in line with GPU-bound benchmarks: about 1.4× at Quality, 1.75× at Performance and 2× at Ultra Performance.
+    /// </summary>
     public static double ResolutionCost(Resolution output, int renderScale)
     {
+        double native = Math.Pow(output.Pixels / (1920d * 1080), 0.75);
+        if (renderScale >= 100) return native;
         double scale = renderScale / 100d;
-        double rendered = output.Pixels * scale * scale;
-        double cost = Math.Pow(rendered / (1920d * 1080), 0.75);
-        if (renderScale < 100) cost += 0.05 * Math.Sqrt(output.Pixels / (1920d * 1080)); // upscaler pass
-        return cost;
+        return native * (UpscaleFixedShare + (1 - UpscaleFixedShare) * scale * scale)
+               + 0.05 * Math.Sqrt(output.Pixels / (1920d * 1080)); // upscaler pass
+    }
+
+    /// <summary>
+    /// <see cref="ResolutionCost"/> plus ray tracing. <paramref name="rtFactor"/> is the share of fps that survives RT at native
+    /// resolution (<see cref="RayTracingFactor"/>). Because RT work is per-pixel, upscaling claws back much more of it:
+    /// path tracing at 1440p runs about 2.4× faster with DLSS Performance, against 1.75× for raster.
+    /// </summary>
+    public static double FrameCost(Resolution output, int renderScale, double rtFactor = 1)
+    {
+        double native = Math.Pow(output.Pixels / (1920d * 1080), 0.75);
+        double scale = renderScale / 100d;
+        double rtShare = renderScale >= 100 ? 1 : RtFixedShare + (1 - RtFixedShare) * scale * scale;
+        return ResolutionCost(output, renderScale) + (1 / rtFactor - 1) * native * rtShare;
     }
 
     /// <summary>How much fps survives turning ray tracing on, by GPU architecture.</summary>
@@ -107,7 +129,7 @@ public static class PerformanceModel
     public static Estimate Run(CatalogGame game, HardwareProfile hw, IReadOnlyDictionary<SettingCategory, int> levels,
                                Resolution res, int renderScale, RayTracingMode rt)
     {
-        double gpu = GpuBase(game) * (hw.Gpu.Score / 100d) / GpuCost(levels) / ResolutionCost(res, renderScale) * RayTracingFactor(hw.Gpu, rt);
+        double gpu = GpuBase(game) * (hw.Gpu.Score / 100d) / GpuCost(levels) / FrameCost(res, renderScale, RayTracingFactor(hw.Gpu, rt));
 
         double cpu = CpuBase(game) * (hw.Cpu.Score / 100d) / CpuCost(levels);
         if (rt != RayTracingMode.Off) cpu *= 0.88; // BVH building is CPU work

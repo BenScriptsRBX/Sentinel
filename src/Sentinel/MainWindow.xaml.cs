@@ -22,6 +22,7 @@ public partial class MainWindow : Window
             var scan = _vm.ScanAsync();
             if (_snapshotDir is not null)
             {
+                IsHitTestVisible = false; // wherever the real mouse is, no hover highlight ends up in the shots
                 Directory.CreateDirectory(_snapshotDir);
                 await Task.Delay(700); // the loading screen is only visible while scanning
                 Capture("loading.png");
@@ -63,7 +64,7 @@ public partial class MainWindow : Window
                 _vm.SelectedCatalogGame = _vm.CatalogView.Cast<GameViewModel>().FirstOrDefault();
             }
             await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-            await Task.Delay(page == Page.Catalog ? 5000 : 400); // let catalog art download
+            await Task.Delay(page is Page.Catalog or Page.Library ? 5000 : 400); // let game art download
             Capture($"{(int)page}-{page}.png");
 
             // Second shot scrolled to the bottom, so below-the-fold layout gets checked too.

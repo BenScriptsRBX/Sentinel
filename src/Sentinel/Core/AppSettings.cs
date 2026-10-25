@@ -20,7 +20,8 @@ public sealed class AppSettings
     public Dictionary<string, GameTarget> Games { get; set; } = [];
 
     private static AppSettings? _current;
-    public static AppSettings Current => _current ??= Load();
+    // Demo mode keeps its targets in memory, so it never shows or overwrites the real ones.
+    public static AppSettings Current => _current ??= AppMode.Demo ? new() : Load();
 
     private static AppSettings Load()
     {
@@ -35,6 +36,7 @@ public sealed class AppSettings
 
     public void Save()
     {
+        if (AppMode.Demo) return;
         try { File.WriteAllText(AppPaths.Settings, JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true })); }
         catch (Exception ex) { Log.Error("settings-save", ex); }
     }

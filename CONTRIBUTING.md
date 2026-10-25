@@ -17,6 +17,7 @@ Two developer switches are useful while working on the UI or detection:
 
 - `Sentinel.exe --report out.json` runs a headless scan and writes hardware, games, plans and tweaks to a file.
 - `Sentinel.exe --snapshot <folder> [catalog search]` renders every page, plus a scrolled-to-bottom view and the loading screen, to PNGs and exits.
+- `Sentinel.exe --demo` shows a made-up PC and game library instead of scanning yours. Nothing is saved and no button changes Windows or a game. The README screenshots come from `Sentinel.exe --snapshot shots --demo`.
 
 ## Project layout
 

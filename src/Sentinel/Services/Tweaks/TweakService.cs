@@ -439,6 +439,7 @@ public sealed class TweakState
 
     public static TweakState Load()
     {
+        if (AppMode.Demo) return new TweakState([]); // the demo PC has nothing of this PC's to revert
         try
         {
             if (File.Exists(AppPaths.TweakState))

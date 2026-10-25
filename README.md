@@ -14,6 +14,8 @@
   <img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6" alt="Windows 10 | 11">
 </p>
 
+<p align="center"><img src="docs/screenshots/dashboard.png" width="900" alt="Sentinel's dashboard: gaming score, hardware cards and top recommendations"></p>
+
 ---
 
 ## Download
@@ -45,8 +47,20 @@ Sentinel would rather under-promise:
 
 - **Conservative figures:** the FPS it shows is the low end of the expected range, about −12%, or −20% for AI-estimated games.
 - **Frame-rate locks:** a game's own lock is respected. Elden Ring never shows more than 60.
+- **Realistic upscaling:** DLSS, FSR and XeSS gains follow GPU-bound benchmarks, about 1.4× at Quality and 1.75× at Performance, rather than raw pixel counts.
 - **Unreachable targets:** if you ask for more than your PC can deliver, it says so and plans for the best your hardware can actually hold. Presets out of reach are greyed out.
 - **Tested for every game:** the test suite checks these rules against all 15,802 catalog games on several hardware profiles.
+
+## Screenshots
+
+| | |
+| :---: | :---: |
+| <img src="docs/screenshots/game.png" alt="A game's page: FPS target, expected fps and the config file Sentinel edits"> | <img src="docs/screenshots/game-settings.png" alt="A game's plan: modern settings and every graphics setting"> |
+| **My Games:** pick an FPS range and see what your PC can hold | **The plan:** upscaling, frame generation, ray tracing and each graphics setting |
+| <img src="docs/screenshots/catalog.png" alt="Game Catalog with estimates for games you don't own"> | <img src="docs/screenshots/tweaks.png" alt="PC Tweaks with the PC-health summary"> |
+| **Game Catalog:** estimates for 15,802 games, installed or not | **PC Tweaks:** Windows, display and hardware fixes you can revert |
+
+Every screenshot comes from demo mode (`Sentinel.exe --demo`), which shows a made-up PC and game library instead of scanning the PC it runs on.
 
 ## Build from source
 
