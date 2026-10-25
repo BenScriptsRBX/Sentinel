@@ -10,7 +10,7 @@
       RELEASE_NOTES.md                                 this version's section of CHANGELOG.md
 #>
 param(
-    [string]$Version = "1.0.0",
+    [string]$Version = "1.0.1",
     [string]$Output = "artifacts"
 )
 
@@ -51,7 +51,8 @@ $sums = foreach ($z in $zips) {
 [System.IO.File]::WriteAllText((Join-Path $out "SHA256SUMS.txt"), (($sums -join "`n") + "`n"), (New-Object System.Text.UTF8Encoding $false))
 
 # Release notes: the matching CHANGELOG section, plus download guidance and checksums.
-$changelog = Get-Content (Join-Path $root "CHANGELOG.md") -Raw
+# Read as UTF-8 explicitly: Windows PowerShell decodes BOM-less files as ANSI, which garbles any non-ASCII character.
+$changelog = Get-Content (Join-Path $root "CHANGELOG.md") -Raw -Encoding UTF8
 $pattern = "(?ms)^## \[" + [regex]::Escape($Version) + "\][^\r\n]*\r?\n(.*?)(?=^## \[|^\[[^\]]+\]:|\z)"
 $section = [regex]::Match($changelog, $pattern).Groups[1].Value.Trim()
 if (-not $section) { $section = "See CHANGELOG.md." }

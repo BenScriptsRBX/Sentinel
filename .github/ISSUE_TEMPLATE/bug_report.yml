@@ -28,7 +28,7 @@ body:
     attributes:
       label: Sentinel version
       description: Shown at the bottom of the sidebar.
-      placeholder: v1.0.0
+      placeholder: v1.0.1
     validations:
       required: true
   - type: input

@@ -4,6 +4,8 @@ All notable changes to Sentinel are listed here. The format follows [Keep a Chan
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-25
+
 ### Added
 
 - **Demo mode:** `Sentinel.exe --demo` shows a made-up PC and game library, so the app can be shown or screenshotted without revealing your hardware or games. Saved settings aren't loaded or written, and no button changes Windows or a game's files.
@@ -32,5 +34,6 @@ First public release.
 - **Game artwork** from Steam and GOG, loaded on demand and cached.
 - **Dark UI** with the Sentinel logo, Windows 11 rounded corners, a game-art hero and an FPS range bar.
 
-[Unreleased]: https://github.com/BenScriptsRBX/Sentinel/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/BenScriptsRBX/Sentinel/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/BenScriptsRBX/Sentinel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/BenScriptsRBX/Sentinel/releases/tag/v1.0.0

@@ -73,7 +73,7 @@ dotnet test Sentinel.slnx
 dotnet run --project src/Sentinel
 ```
 
-To build the release zips locally, run `pwsh build/publish.ps1 -Version 1.0.0`. They go to `artifacts/`.
+To build the release zips locally, run `pwsh build/publish.ps1 -Version 1.0.1`. They go to `artifacts/`.
 
 ## Catalog data
 
