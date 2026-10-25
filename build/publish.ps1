@@ -47,7 +47,8 @@ $sums = foreach ($z in $zips) {
     $hash = (Get-FileHash $z.Zip -Algorithm SHA256).Hash.ToLowerInvariant()
     "$hash  $(Split-Path $z.Zip -Leaf)"
 }
-Set-Content -Path (Join-Path $out "SHA256SUMS.txt") -Value $sums -Encoding ascii
+# LF line endings so `sha256sum -c SHA256SUMS.txt` works as well as PowerShell's Get-FileHash.
+[System.IO.File]::WriteAllText((Join-Path $out "SHA256SUMS.txt"), (($sums -join "`n") + "`n"), (New-Object System.Text.UTF8Encoding $false))
 
 # Release notes: the matching CHANGELOG section, plus download guidance and checksums.
 $changelog = Get-Content (Join-Path $root "CHANGELOG.md") -Raw
